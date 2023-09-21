@@ -1876,8 +1876,6 @@ tm_gee_weights
 # re
 ```
 
-
-
 ```{r save-figures, eval = F}
 # save figures as image files
 # obviously this could be made into a for loop
