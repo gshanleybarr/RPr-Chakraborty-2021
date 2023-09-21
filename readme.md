@@ -15,6 +15,8 @@ This study is a replication of:
 - [Peter Kedron](https://sgsup.asu.edu/peter-kedron)
 - [Derrick Burt](https://derrickburt.github.io)
 - [Junyi Zhou](https://emilyzhou112.github.io)
+- [New Author](https://newauthor.github.io)
+- [Grayson Shanley Barr](https://gshanleybarr.github.io) 
 
 ## Repository Documents
 
