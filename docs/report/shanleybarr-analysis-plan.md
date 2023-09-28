@@ -12,7 +12,7 @@ In this reproduction analysis I plan to:
 - Finally, I would also like to add a short conclusion to the study.
  
 ## Results: 
-	The majority of the changes I plan to make to the study are with the visualization of maps throughout the analysis as well as through the re-formatting of the data tables. I also plan to edit, synthesize, and contribute my perspective to the discussion. In addition I will add a short conclusion to discuss the efficacy of reproduction and what the implications of our findings are for the original study. 
+The majority of the changes I plan to make to the study are with the visualization of maps throughout the analysis as well as through the re-formatting of the data tables. I also plan to edit, synthesize, and contribute my perspective to the discussion. In addition I will add a short conclusion to discuss the efficacy of reproduction and what the implications of our findings are for the original study. 
  
 ## Discussion: 
 My hope is that the revised maps and tables will provide visual clarity to accompany the analysis, the discussion will synthesize and consolidate findings for readers, and the conclusion will highlight the implications of findings in the reproduction analysis for the original study. 
