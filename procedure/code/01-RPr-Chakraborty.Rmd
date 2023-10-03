@@ -356,35 +356,24 @@ However, we replace the missing data with zeros, producing results identical to 
 
 ```{r missing data}
 # county with missing data
+filter(acs_covid, is.na(bpov_pct)) %>% st_drop_geometry() %>% kable()
 filter(acs_covid, is.na(bpov_pct)) %>% st_drop_geometry() %>% t() %>% kable()  
-
-
 # county with missing data
 acs_covid %>% filter(is.na(bpov_pct)) %>% st_drop_geometry() %>%
   #round(2) %>% 
   t() %>% 
   as.data.frame() %>% 
-  #drop_na() %>% 
   #select()
-  kable(digits=2, caption = "Table 1: Example County with Missing Data",
-        #col.names = c("County Data", "Data"),
-        align = "c") %>%
+  kable(digits=2, caption = "Table 1: Example County with Missing Data") %>%
   kableExtra::column_spec(1, bold = TRUE) %>% 
-  kable_styling(full_width = FALSE)
-
-## How to rename column names?
-## How to center rows? 
-
+  kable_styling() 
 #missing_data_table <- filter(acs_covid, is.na(bpov_pct)) %>% st_drop_geometry() %>% t() %>% kable(digits=2, caption = "Example County with Missing Data") %>% kable_styling()
-
 #rownames(missing_data_table) <- c("FIPS Code", "State FP", "County", "County State","COVID Rate", "Dis Percent", "White Percent", "Black Percent", "Native American Percent", "Asian Percent", "Other Percent", " Non-Hispanic White Percent", "Hispanic Percent", "Non-Hispanic Non-White Percent", "BPOV Percent", "APOV Percent", "Percent Ages 5-17", "Percent Ages 18-34", "Percent Ages 35-64", "Percent Ages 65-74", "Percent Over Age 75", "Percent Male", "Percent Female", "Population", "Cases", "Latitude", "Longitude") 
-
 #row.names=c("FIPS Code", "State FP", "County", "County State","COVID Rate", "Dis Percent", "White Percent", "Black Percent", "Native American Percent", "Asian Percent", "Other Percent", " Non-Hispanic White Percent", "Hispanic Percent", "Non-Hispanic Non-White Percent", "BPOV Percent", "APOV Percent", "Percent Ages 5-17", "Percent Ages 18-34", "Percent Ages 35-64", "Percent Ages 65-74", "Percent Over Age 75", "Percent Male", "Percent Female", "Population", "Cases", "Latitude", "Longitude"),
-
 # kbl(col.names = c("County Data", "Data")) %>% 
-
-
 # replace NA with 0 for missing data
+acs_covid[is.na(acs_covid$bpov_pct), ]$bpov_pct <- 0
+acs_covid[is.na(acs_covid$apov_pct), ]$apov_pct <- 0
 #acs_covid[is.na(acs_covid$bpov_pct), ]$bpov_pct <- 0
 #acs_covid[is.na(acs_covid$apov_pct), ]$apov_pct <- 0
 ```
