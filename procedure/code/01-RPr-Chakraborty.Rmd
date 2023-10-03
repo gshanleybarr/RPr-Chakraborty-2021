@@ -364,10 +364,16 @@ acs_covid %>% filter(is.na(bpov_pct)) %>% st_drop_geometry() %>%
   #round(2) %>% 
   t() %>% 
   as.data.frame() %>% 
+  #drop_na() %>% 
   #select()
-  kable(digits=2, caption = "Table 1: Example County with Missing Data") %>%
+  kable(digits=2, caption = "Table 1: Example County with Missing Data",
+        #col.names = c("County Data", "Data"),
+        align = "c") %>%
   kableExtra::column_spec(1, bold = TRUE) %>% 
-  kable_styling() 
+  kable_styling(full_width = FALSE)
+
+## How to rename column names?
+## How to center rows? 
 
 #missing_data_table <- filter(acs_covid, is.na(bpov_pct)) %>% st_drop_geometry() %>% t() %>% kable(digits=2, caption = "Example County with Missing Data") %>% kable_styling()
 
@@ -392,16 +398,16 @@ tm_covid_rates <- tm_shape(acs_covid) +
   tm_polygons("covid_rate",
     title = "COVID-19 Cases per 100,000 people\n(22 January 2020 to 1 August 2020)",
     style = "quantile",
-    border.alpha = .2,
-    lwd = 0.2,
+    border.alpha = .07,
+    lwd = 0.07,
     palette = "Oranges",
   ) +
   tm_shape(state) +
-    tm_borders("grey", lwd = .5) +
+    tm_borders("grey", lwd = .2) +
   tm_layout(
     legend.position = c("left", "bottom"),
     legend.title.size = 0.8,
-    legend.text.size = 0.5
+    legend.text.size = 0.6
   )
 
 tm_covid_rates
@@ -416,20 +422,23 @@ tm_disability_rates <- tm_shape(acs_covid) +
   tm_polygons("dis_pct",
     title = "Percent of People with Disability\n(ACS 2014-2018)",
     style = "quantile",
-    border.alpha = .2,
-    lwd = 0.2,
+    #border.col= "white",
+    border.alpha = .07,
+    lwd = 0.07,
     palette = "Oranges"
   ) +
   tm_shape(state) +
-  tm_borders("grey", lwd = .5) +
+  tm_borders("grey", lwd = .2) +
   tm_layout(
     legend.position = c("left", "bottom"),
     legend.title.size = 0.8,
-    legend.text.size = 0.5
+    legend.text.size = 0.6
   )
 
 tm_disability_rates
 ```
+
+tm_spatialepi_clusters \<- tm_shape(state) + tm_fill("gray98") + tm_shape(acs_covid) + tm_polygons(col = "isCluster", palette = "-Oranges", popup.vars = c("fips", "clusterID"), colorNA = NULL, title = "SpatialEpi Kulldorff COVID-19 Clusters", border.col = "white", lwd = 0.2, border.alpha = 0.2) + tm_shape(state) + tm_borders("grey", lwd = 0.5) + tm_layout( legend.position = c("left", "bottom"), legend.title.size = 0.8, legend.text.size = 0.6 )
 
 ## Descriptive statistics
 
@@ -874,11 +883,11 @@ tm_spatialepi_clusters <-
           lwd = 0.2,
           border.alpha = 0.2) +
   tm_shape(state) +
-    tm_borders("grey", lwd = 0.5) +
+    tm_borders("grey", lwd = 0.3) +
   tm_layout(
     legend.position = c("left", "bottom"),
     legend.title.size = 0.8,
-    legend.text.size = 0.5
+    legend.text.size = 0.6
   )
 
 tm_spatialepi_clusters
@@ -962,11 +971,11 @@ tm_spatialepi_local_risk_class <- tm_shape(acs_covid) +
     labels = class_freq$label
   ) +
   tm_shape(state) +
-  tm_borders("grey", lwd = .5) +
+  tm_borders("grey", lwd = .3) +
   tm_layout(
     legend.position = c("left", "bottom"),
     legend.title.size = 0.8,
-    legend.text.size = 0.5
+    legend.text.size = 0.6
   )
 
 rm(class_freq)
@@ -1001,11 +1010,11 @@ tm_spatialepi_cluster_risk_class <- tm_shape(acs_covid) +
     labels = class_freq$label
   ) +
   tm_shape(state) +
-  tm_borders("grey", lwd = .5) +
+  tm_borders("grey", lwd = .3) +
   tm_layout(
     legend.position = c("left", "bottom"),
     legend.title.size = 0.8,
-    legend.text.size = 0.5
+    legend.text.size = 0.6
   )
 
 rm(class_freq)
@@ -1144,7 +1153,7 @@ tm_author_clusters <-
               colorNA = NULL,
               title = "SaTScan Kulldorff COVID-19 Clusters\nCluster Centers") +
   tm_shape(state) +
-    tm_borders("grey", lwd = 0.5) +
+    tm_borders("grey", lwd = 0.3) +
   tm_shape(gini_circle) +
     tm_borders(col = "thistle4") +
     tm_text("NUMBER_LOC", size = 0.5) +
@@ -1153,8 +1162,8 @@ tm_author_clusters <-
     tm_text("NUMBER_LOC", size = 0.5, ymod = 0.4) +
   tm_layout(
     legend.position = c("left", "bottom"),
-    legend.title.size = 0.8,
-    legend.text.size = 0.5
+    legend.title.size = 0.9,
+    legend.text.size = 0.6
   ) +
   tm_add_legend('symbol',
               	col = NA,
@@ -1278,7 +1287,7 @@ tm_spatialepi_hier <-
   tm_shape(hier_clusters) +
   tm_polygons(
     col = "xcluster",
-    palette = c("wheat", "tomato", "thistle3"),
+    palette = c("lightgoldenrod1", "tomato", "lightskyblue1"),
     colorNA = NULL,
     title = "SaTScan Hierarchical and SpatialEpi Clusters",
     border.col = "white",
@@ -1286,11 +1295,11 @@ tm_spatialepi_hier <-
     border.alpha = 0.3
   ) +
   tm_shape(state) +
-  tm_borders("grey", lwd = 0.5) +
+  tm_borders("grey", lwd = 0.3) +
   tm_layout(
     legend.position = c("left", "bottom"),
-    legend.title.size = 0.8,
-    legend.text.size = 0.5
+    legend.title.size = 0.9,
+    legend.text.size = 0.6
   )
 
 tm_spatialepi_hier
@@ -1323,7 +1332,7 @@ tm_spatialepi_gini <-
   tm_shape(gini_clusters) +
   tm_polygons(
     col = "xcluster",
-    palette = c("wheat", "tomato", "thistle3"),
+    palette = c("lightgoldenrod1", "thistle3", "lightskyblue1"),
     colorNA = NULL,
     title = "SaTScan GINI Optimized and SpatialEpi Clusters",
     border.col = "white",
@@ -1331,11 +1340,11 @@ tm_spatialepi_gini <-
     border.alpha = 0.3
   ) +
   tm_shape(state) +
-  tm_borders("grey", lwd = 0.5) +
+  tm_borders("grey", lwd = 0.3) +
   tm_layout(
     legend.position = c("left", "bottom"),
-    legend.title.size = 0.8,
-    legend.text.size = 0.5
+    legend.title.size = 0.9,
+    legend.text.size = 0.6
   )
 
 tm_spatialepi_gini
@@ -1661,6 +1670,7 @@ gee_or_clus_ordep <- gee_data %>% onegee(
                     dep_var = "or_incidence",
                     id = gee_data$ss_clusID,
                     term_names = table2$term)
+
 gee_or_clus_ordep$coefficients %>%
   kable(caption = "Original Cluster IDs and Original COVID-19 Incidence",
         align = "c") %>%
@@ -1822,7 +1832,7 @@ tm_gee_residuals <- tm_shape(gee_resid) +
   tm_layout(
     legend.position = c("left", "bottom"),
     legend.title.size = 0.8,
-    legend.text.size = 0.5,
+    legend.text.size = 0.6,
     legend.width = 0.25,
     legend.hist.size = 0.5,
     legend.hist.height = 0.15
@@ -1874,8 +1884,8 @@ tm_gee_weights <- tm_shape(gee_resid) +
   tm_polygons("w",
     title = "Race Model Weights",
     style = "jenks",
-    border.alpha = .2,
-    lwd = 0.1,
+    border.alpha = .07,
+    lwd = 0.07,
     palette = "Oranges",
     legend.hist = FALSE,
 #    midpoint = 0
@@ -1886,7 +1896,7 @@ tm_gee_weights <- tm_shape(gee_resid) +
   tm_layout(
     legend.position = c("left", "bottom"),
     legend.title.size = 0.8,
-    legend.text.size = 0.5,
+    legend.text.size = 0.6,
     legend.width = 0.25,
     legend.hist.size = 0.5,
     legend.hist.height = 0.15
