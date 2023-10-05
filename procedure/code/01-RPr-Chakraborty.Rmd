@@ -7,7 +7,7 @@ editor_options:
   markdown:
     wrap: sentence
 knit: (function(inputFile, encoding) {
-  rmarkdown::render(inputFile, encoding = encoding, output_dir = "../../docs") })
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "../../docs/report") })
 ---
 
 Version 3.0 \| First Created July 7, 2021 \| Updated October 2nd, 2023
