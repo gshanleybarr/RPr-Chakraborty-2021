@@ -2,7 +2,7 @@
 title: "Reproduction of Chakraborty 2021: An intracategorical analysis of COVID-19 and people with disabilities"
 author: "Joseph Holler, Junyi Zhou, Peter Kedron, Drew An-Pham, Derrick Burt. Grayson Shanley Barr"
 date: "`r Sys.Date()`"
-output: html_document
+output: pdf_document
 editor_options:
   markdown:
     wrap: sentence
@@ -58,7 +58,7 @@ Stated as null reproduction study hypotheses (RPr-H):
 There are multiple models being tested within each of the two hypotheses.
 That is, H1 and H2 both encompass five models, including one for each dimension of socio-demographics: race, ethnicity, poverty status, age, and biological sex.
 
-# Original study design
+# Original Study Design
 
 The original study is **observational**, with the **exploratory** objective of determining "whether COVID-19 incidence is significantly greater in counties containing higher percentages of socio-demographically disadvantaged [people with disabilities], based on their race, ethnicity, poverty status, age, and biological sex" (Chakraborty 2021).
 
@@ -361,11 +361,11 @@ However, we replace the missing data with zeros, producing results identical to 
 
 # county with missing data
 acs_covid %>% filter(is.na(bpov_pct)) %>% st_drop_geometry() %>%
-  t() %>% 
-  as.data.frame() %>% 
+  t() %>%
+  as.data.frame() %>%
   kable(digits=2, caption = "Example County with Missing Data") %>%
-  kableExtra::column_spec(1, bold = TRUE) %>% 
-  kable_styling() 
+  kableExtra::column_spec(1, bold = TRUE) %>%
+  kable_styling()
 
 # replace NA with 0 for missing data
 acs_covid[is.na(acs_covid$bpov_pct), ]$bpov_pct <- 0
@@ -397,7 +397,7 @@ tm_covid_rates <- tm_shape(acs_covid) +
 tm_covid_rates
 ```
 
-## Map disability rates
+## Map Disability Rates
 
 **Unplanned deviation for reproduction**: We also map the spatial distribution of the percent of people with any disability to improve our understanding of the geographic patterns and relationships of between the overarching independent variable (percentage of people with disability) and the dependent variable (COVID-19 incidence rate).
 
@@ -474,7 +474,7 @@ disability_by_race <- tmap_arrange(maps_list)
 disability_by_race
 ```
 
-## Descriptive statistics
+## Descriptive Statistics
 
 Calculate descriptive statistics for dependent COVID-19 rate and independent socio-demographic characteristics, reproducing the min, max, mean, and SD columns of original study table 1.
 
@@ -519,9 +519,9 @@ rm(acs_covid_stats)
 
 The descriptive statistics are identical, except that the original study seems to have rounded the COVID-19 statistics to zero decimal places.
 
-# Analytical methods
+# Analytical Methods
 
-## Bivariate parametric correlation analysis
+## Bivariate Parametric Correlation Analysis
 
 The county-level Pearson's rho correlation coefficient was used to test association between intra-categorical rates of disability and COVID-19 incidence rates.
 As this was a parametric test, normality should be tested.
@@ -670,7 +670,7 @@ acs_covid %>%
 The join worked, highlighting the same 13 counties with inconsistent incidence rates.
 This also confirms that our reproduced dependent variable is identical to the original dependent variable with the exception of these three counties.
 
-## Bivariate nonparametric correlation analysis
+## Bivariate Nonparametric Correlation Analysis
 
 **Unplanned Deviation for Reproduction**: The dependent and independent variables in this study do not have normal distributions, as shown in the Shapiro-Wilk test results above.
 Therefore, we deviate from the original study to use the Spearman's Rho non-parametric correlation test.
@@ -746,7 +746,7 @@ rm(spearmans_rho, pearsons_r, correlations, table1, df)
 
 
 
-## Kulldorff spatial scan statistic
+## Kulldorff Spatial Scan Statistic
 
 Although there were no major geographic *transformations* in this study, *geographic grouping criteria* for the generalized estimating equation (GEE) models are defined as a combination of states and COVID-19 risk, which is based on the Kulldorff spatial scan statistic for geographic clusters of high COVID-19 incidence.
 The scan statistic in SaTScan used spherical great circle distance calculations based upon the latitude and longitude coordinates of the centroid of each county.
@@ -884,7 +884,7 @@ for (i in secondary) {
 rm(cluster_locations, secondary, i, new_clusters)
 ```
 
-### Map Kulldorff clusters
+### Map Kulldorff Clusters
 
 **Unplanned deviation for reproduction**: The original study does not include visualizations of the spatial structure and distribution of COVID-19 clusters.
 
@@ -1062,7 +1062,7 @@ tm_spatialepi_cluster_risk_class
 Comparing the cluster and local relative risk classifications for regions like the Southeast, it is apparent that some areas of high risk are represented with large clusters that have an averaging effect on the cluster-based relative risk score.
 This effect is more pronounced for clusters with low compactness (e.g. the Southeast cluster stretched over the "black belt" region from Louisiana and Arkansas to Georgia) than clusters with higher compactness (e.g. New York City) because the circular shape of clusters includes more low-risk counties.
 
-### Compare clusters
+### Compare Clusters
 
 The original study did not directly report any results from the Kulldorff spatial scan statistic.
 However, the Kulldorff cluster relative risk scores were combined with states to create clusters for GEE models, hereafter called "GEE clusters".
@@ -1297,7 +1297,7 @@ acs_covid <- acs_covid[, 1:which(colnames(acs_covid) == "ss_clusID")] %>%
   left_join(satscan_rpr_gini, by = "fips") %>%
   left_join(satscan_rpr_hier, by = "fips")
 
-rm(satscan_rpr_gis_t, satscan_rpr_gini, satscan_rpr_hier) 
+rm(satscan_rpr_gis_t, satscan_rpr_gini, satscan_rpr_hier)
 ```
 
 It was necessary to divide the Hierarchical clusters from the GINI clusters to avoid duplicates and geographic overlap.
@@ -1498,7 +1498,7 @@ First, calculate GEE cluster IDs.
 
 We have already calculated: - `rp_clusID` based on our SpatialEpi clusters - `ss_clusID` based on our SaTScan cluster centers, and shown to be identical to the original author's data - `gini_clusID` based on our SaTScan GINI-optimized clusters
 
-### Filter and standardize data
+### Filter and Standardize data
 
 Second, filter the data for non-zero COVID-19 rates and z-score standardize the independent variables.
 This accomplishes step 10 of the workflow diagram.
@@ -1604,7 +1604,7 @@ When we had filtered for COVID rates \> 0 first and then z-score standardized se
 After changing the order to first z-score standardize and then filter for COVID rates \> 0, we observed no mean difference between our reproduced variables and the original variables, and we find no standard deviation \> 0.001 for the difference between reproduction independent variables and original variables.
 There are no major differences between the independent variables.
 
-#### Save final derived data
+#### Save Final Derived Data
 
 Optionally, you may save the preprocessed data to `data/raw/public/gee_data.gpkg`
 
@@ -1800,7 +1800,7 @@ gee_rp_clus_rpdep$coefficients %>%
   kable_styling()
 ```
 
-### Compare GEE results
+### Compare GEE Results
 
 **Unplanned deviation for reanalysis**: Generate dot-and-whisker plot of coefficients for each of the model variations for efficient visual comparison of coefficients across each model.
 
@@ -1923,9 +1923,9 @@ Calculate variance, covariance, correlation, and weights
 
 ```{r weights}
 # calculate k number of observations per cluster
-gee_resid <- gee_resid %>% 
-  group_by(ss_clusID) %>% 
-  mutate(k = n()) %>% 
+gee_resid <- gee_resid %>%
+  group_by(ss_clusID) %>%
+  mutate(k = n()) %>%
   ungroup()
 
 grps <- gee_resid %>% st_drop_geometry() %>% select(ss_clusID, residual = residual)
@@ -1951,7 +1951,7 @@ c <- sum(outer(grps$residual, grps$residual, "*") * m, na.rm = TRUE) / covar_d
 r <- c / v
 
 # calculate weights
-gee_resid <- gee_resid %>% 
+gee_resid <- gee_resid %>%
   mutate(w = 1 / (1 + (k - 1) * r))
 ```
 
@@ -2028,6 +2028,8 @@ The original study used Pearson's correlation to test bivariate relationship bet
 Our reanalysis of the correlations generally found identical directions and increased magnitudes, confirming the bivariate correlations and significance levels of most of the socio-demographic subcategories.
 However, biological sex may not be correlated with COVID-19 incidence rates, as the percentage of females with disabilities changes in both direction and significance.
 
+In the reproduction, we additionally added a series of maps that compare percent with disability by race in the US. It is notable that among black Americans, PwD are clustered in the South. Meanwhile, people that identify as Asian and with disability are concentrated on the West coast. In contrast, white Americans with disabibilites are distrubuted fairly evenly across the country. 
+
 ### Review of the Kulldorff Spatial Scan Statistic
 
 The Kulldorff spatial scan statistic varied significantly between the original study and our reproduction and re-analysis with regards to selection of secondary clusters, interpretation of clusters, and relative risk scores.
@@ -2058,7 +2060,7 @@ Ideally, we would have liked to use a GINI-based secondary cluster detection to 
 
 In the **third part** of our reproduction analysis, the results from each the five GEE models were largely consistent with Chakraborty's, suggesting robustness to modeling decisions with regards to GEE clusters.
 However, a few independent variables exhibited instability across models, suggesting weak or spurious relationships.
-We ultimately modeled three different scenarios: 
+We ultimately modeled three different scenarios:
 1.
 We reproduced the original analysis with the original data while changing only the computational environment to geepack in R.
 2.
@@ -2143,9 +2145,9 @@ No **outliers** were analyzed or accounted for in the study.
 No **weights** were applied in the study.
 
 ## Critiques of Study
-Two potential sources of bias in the results of the study arise from the exclusion of data from Puerto Rico, Hawaii, Alaska, and institutionalized peoples. Although including regions outside of the continental US, could have led to challenges in the configuration of the spatial clustering, including these regions could also have provided more aggregate data on potential associations between PwD and socio-demographic characteristics. In addition, although there is not likely to be accurate data on COVD-19 incidence and institutionalized peoples, this reflects a substantial oversight on the part of the national government to neglect to collect health and demographic information on individuals living in ‘institutionalized group quarters’. The lack of inclusion of institutionalized groups likely underestimate the findings that PwDs are more likely to experience multiple threats that jeopardize their health based on disability, racial/ethnic minority, and poverty status given that COVID-19 incidence is higher among people living in close quarters and people of color are disproportionately represented in the prison population (black Americans are imprisoned at 5 times the rate of white Americans) (https://www.sentencingproject.org/reports/the-color-of-justice-racial-and-ethnic-disparity-in-state-prisons-the-sentencing-project/). 
+Two potential sources of bias in the results of the study arise from the exclusion of data from Puerto Rico, Hawaii, Alaska, and institutionalized peoples. Although including regions outside of the continental US, could have led to challenges in the configuration of the spatial clustering, including these regions could also have provided more aggregate data on potential associations between PwD and socio-demographic characteristics. In addition, although there is not likely to be accurate data on COVD-19 incidence and institutionalized peoples, this reflects a substantial oversight on the part of the national government to neglect to collect health and demographic information on individuals living in ‘institutionalized group quarters’. The lack of inclusion of institutionalized groups likely underestimate the findings that PwDs are more likely to experience multiple threats that jeopardize their health based on disability, racial/ethnic minority, and poverty status given that COVID-19 incidence is higher among people living in close quarters and people of color are disproportionately represented in the prison population (black Americans are imprisoned at 5 times the rate of white Americans) (https://www.sentencingproject.org/reports/the-color-of-justice-racial-and-ethnic-disparity-in-state-prisons-the-sentencing-project/).
 
-## Unplanned Deviations in the Reproduction Analysis 
+## Unplanned Deviations in the Reproduction Analysis
 The reproduction analysis intentionally deviated slightly from the original study in order to conduct  robustness tests on the results of the original analysis and to use an Open Source computational environment (R Studio). In addition to these planned deviations in the reproduction analysis, there were a handful of deviations from the original analysis in the reproduction, including: the calculation of bivariate tests, results comparing SaTScan and SpatialEpi Packages, mapping disability rates, and  missing data errors.
 
 Some minor unplanned deviations stemmed from small operational errors or the constraints of a short journal article for describing the data and methodology of a research project.
@@ -2197,7 +2199,7 @@ We therefore ran another set of the five GEE models using data provided by the o
 ### Future Research Avenues
 In the future it would be thought provoking to investigate if a subsequent analysis could be conducted at a finer grain scale such as the census tract level. While conducting the analysis at such a small scale would be unlikely to meaningfully change many of the spatial clusters, cartographic visualization of the relative risk would be able to highlight neighborhoods or particular regions of cities that have been disproportionately impacted by COVID-19. These results would likely support results from the original study that found that PwDs are more likely to experience multiple threats that jeopardize their health based on disability, racial/ethnic minority, and poverty status.
 
-In addition, it would also be meaningful to conduct a reanalysis of the study over a longer temporal span to examine if PwDs are continue to experience multiple threats that jeopardize their health based on disability, racial/ethnic minority, and poverty status even as the pandemic subsided since 2020. An ethnographic study could additionally provide a beneficial complement to the quantitative findings; for example, a human geographer could conduct  interviews with PwD in a number of the documented spatial clusters from the Chakraborty (2021) study to provide insight through qualitative methods. A corresponding ethnography would assist in depicting the story on the ground behind the figures found in the study. 
+In addition, it would also be meaningful to conduct a reanalysis of the study over a longer temporal span to examine if PwDs are continue to experience multiple threats that jeopardize their health based on disability, racial/ethnic minority, and poverty status even as the pandemic subsided since 2020. An ethnographic study could additionally provide a beneficial complement to the quantitative findings; for example, a human geographer could conduct  interviews with PwD in a number of the documented spatial clusters from the Chakraborty (2021) study to provide insight through qualitative methods. A corresponding ethnography would assist in depicting the story on the ground behind the figures found in the study.
 
 # Conclusion
 In conclusion, although some of the results differed from Chakraborty's analysis because of differences in analytical methods, conceptualizations, and computational environments, the reproduction results still suggest that PwDs are more likely to experience multiple threats that jeopardize their health based on the convergence of their disability, racial/ethnic minority, and poverty status.
@@ -2213,7 +2215,7 @@ Subsequently, in the second version of the reproduction report, we improved our 
 This change prompted us to re-order some content to flow more linearly with the sequencing required by code, and prompted us to digitize (if necessary) and import results from the original research into Rmarkdown for quantitative comparison to the reproduction study.
 These comparisons led to further insights and research into discrepancies between the original and reproduced Pearsons's correlations between various forms of the Kulldorff spatial scan statistic.
 We also discovered an improved method for comparing the results of generalized linear models by plotting all of the model results on a dot-whisker graph using the dot-whisker package.
-Finally, in a third iteration of the reproduction report, we focused on improving data visualizations, particularly regarding the cohesion and cartographic design of maps in the report, the legibility of Table 2, a table representing missing data, and on the narrative flow of the discussion and conclusion of the report. 
+Finally, in a third iteration of the reproduction report, we focused on improving data visualizations, particularly regarding the cohesion and cartographic design of maps in the report, the legibility of Table 2, a table representing missing data, and on the narrative flow of the discussion and conclusion of the report.
 
 ## Further Opportunities to Build Upon Results
-There are opportunities to further improve data visualizations of study results. I found it challenging to interpret the maps comparing results from the SaTScan and SpatialEpi packages, therefore I focused most of my time on improving the cartographic visualization of these results. An additional means to improve the reproducibility of the study would be for Chakraborty to make the original analysis code accessible to other researchers and students, which would support the ethos of a collective scientific commons for knowledge to be shared and built upon. 
+There are opportunities to further improve data visualizations of study results. I found it challenging to interpret the maps comparing results from the SaTScan and SpatialEpi packages, therefore I focused most of my time on improving the cartographic visualization of these results. An additional means to improve the reproducibility of the study would be for Chakraborty to make the original analysis code accessible to other researchers and students, which would support the ethos of a collective scientific commons for knowledge to be shared and built upon.
