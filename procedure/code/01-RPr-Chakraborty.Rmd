@@ -1,6 +1,6 @@
 ---
 title: "Reproduction of Chakraborty 2021: An intracategorical analysis of COVID-19 and people with disabilities"
-author: "Joseph Holler, Junyi Zhou, Peter Kedron, Drew An-Pham, Derrick Burt. Grayson Shanley Barr"
+author: "Joseph Holler, Junyi Zhou, Peter Kedron, Drew An-Pham, Derrick Burt, Grayson Shanley Barr"
 date: "`r Sys.Date()`"
 output: html_document
 editor_options:
@@ -427,8 +427,6 @@ tm_disability_rates <- tm_shape(acs_covid) +
 
 tm_disability_rates
 ```
-
-tm_spatialepi_clusters \<- tm_shape(state) + tm_fill("gray98") + tm_shape(acs_covid) + tm_polygons(col = "isCluster", palette = "-Oranges", popup.vars = c("fips", "clusterID"), colorNA = NULL, title = "SpatialEpi Kulldorff COVID-19 Clusters", border.col = "white", lwd = 0.2, border.alpha = 0.2) + tm_shape(state) + tm_borders("grey", lwd = 0.5) + tm_layout( legend.position = c("left", "bottom"), legend.title.size = 0.8, legend.text.size = 0.6 )
 
 ## Descriptive statistics
 
