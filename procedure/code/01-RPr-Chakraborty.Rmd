@@ -1,6 +1,6 @@
 ---
 title: "Reproduction of Chakraborty 2021: An intracategorical analysis of COVID-19 and people with disabilities"
-author: "Joseph Holler, Junyi Zhou, Peter Kedron, Drew An-Pham, Derrick Burt, Grayson Shanley Barr"
+author: "Joseph Holler, Junyi Zhou, Peter Kedron, Drew An-Pham, Derrick Burt. Grayson Shanley Barr"
 date: "`r Sys.Date()`"
 output: html_document
 editor_options:
@@ -427,6 +427,8 @@ tm_disability_rates <- tm_shape(acs_covid) +
 
 tm_disability_rates
 ```
+
+
 
 ## Descriptive statistics
 
