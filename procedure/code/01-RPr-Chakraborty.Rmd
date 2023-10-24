@@ -428,6 +428,56 @@ tm_disability_rates <- tm_shape(acs_covid) +
 tm_disability_rates
 ```
 
+### Maping Percent Disability by Race
+```{r map-distribution-of-percent-race}
+
+library(tmap)
+
+# Create a list of variables to map
+variables_to_map <- c("white_pct", "black_pct", "native_pct", "asian_pct", "other_pct")
+
+# Define custom legend titles
+custom_legend_titles <- c(
+  "White Alone",
+  "Black Alone",
+  "Native Alone",
+  "Asian Alone",
+  "Other Alone"
+)
+
+# Create a list of maps with custom legend titles
+maps_list <- lapply(seq_along(variables_to_map), function(i) {
+  var <- variables_to_map[i]
+  custom_title <- custom_legend_titles[i]
+  tm_shape(acs_covid) +
+    tm_polygons(var,
+      title = paste("Map for Disability Percent:", custom_title),
+      style = "fisher",
+      border.alpha = 0.2,
+      lwd = 0.2,
+      palette = "Oranges",
+      legend.hist = FALSE
+    ) +
+    tm_shape(state) +
+    tm_borders("grey", lwd = 0.5) +
+    tm_layout(
+      legend.position = c("left", "bottom"),
+      legend.title.size = 0.8,
+      legend.text.size = 0.4,
+      legend.width = 0.25,
+      legend.hist.size = 0.5,
+      legend.hist.height = 0.15
+    )
+})
+
+# Plot the maps side by side
+disability_by_race <- tmap_arrange(maps_list)
+disability_by_race
+```
+
+
+
+The set of maps above depict percent disability by race. From the upper left corner, the maps depict the spatial distribution of percent disability of White respondents, Black, Native American, Asian, and Other, respectively. The map series assists in identifying clusters of people with disabilities by race. For example, the second map highlights the clustering of Black people with disabilities in the Southeastern US, while there is a high denisty of Native Americans with disabilities in the four corners region of the US. 
 
 
 ## Descriptive statistics
@@ -1911,6 +1961,8 @@ tmap_save(tm_spatialepi_hier, here("results", "figures", "tm_spatialepi_hier.png
 tmap_save(tm_spatialepi_cluster_risk_class, here("results", "figures", "tm_spatialepi_cluster_risk_class.png"))
 tmap_save(tm_spatialepi_local_risk_class, here("results", "figures", "tm_spatialepi_local_risk_class.png"))
 ggsave(here("results", "figures", "plot_coefficients.png"), geewhisker_fig)
+tmap_save(disability_by_race, here("results", "figures", "disability_by_race.png"))
+## Save image of map plot
 ```
 
 # Discussion
